@@ -24,7 +24,7 @@ def split_v1(x: list) -> tuple[list, list]:
     return even_list, odd_list
 
 def split_v2(x: list) -> tuple[list, list]:
-    # такое решение пробегается по массиву, но в теории может быть не сильно медленнее,
+    # такое решение пробегается по массиву дважды, но в теории может быть не сильно медленнее,
     # чем решение V1, потому что генераторы списков работают быстро
     return [elem for elem in x if elem % 2 == 0], [elem for elem in x if elem % 2 == 1]
 
