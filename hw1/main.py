@@ -15,7 +15,7 @@ def square_solution(a: float, b: float, c:float) -> tuple | None:
         return None
 
 def split_v1(x: list) -> tuple[list, list]:
-    # решение с одним проходом
+    # решение с одним проходом по массиву
     odd_list = []
     even_list = []
     for elem in x:
@@ -24,13 +24,11 @@ def split_v1(x: list) -> tuple[list, list]:
     return even_list, odd_list
 
 def split_v2(x: list) -> tuple[list, list]:
-    # такое решение хоть и два раза пробигается по массиву, но в теории может не сильно медленнее
-    # чем решение с созданием 2 списков и одним проходом
-    # потому что генераторы списков работают быстро
+    # такое решение пробегается по массиву, но в теории может быть не сильно медленнее,
+    # чем решение V1, потому что генераторы списков работают быстро
     return [elem for elem in x if elem % 2 == 0], [elem for elem in x if elem % 2 == 1]
 
 def time_test(size: int, count_experiments: int = 10) -> None:
-    # --- speed comparison ---
     x = [randint(0, 10000) for _ in range(size)]
 
     start_v1 = time()
