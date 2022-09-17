@@ -1,5 +1,5 @@
 def near_zero(l: list) -> list:
-    minimum = min(list(map(abs, l)))
+    minimum = min(map(abs, l))
     return [l[i] for i in range(len(l)) if abs(l[i]) == minimum]
 
 def merge(l1: list, l2: list) -> list:
