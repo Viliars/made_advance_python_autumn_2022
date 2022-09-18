@@ -8,7 +8,7 @@ def square_solution(a: float, b: float, c:float) -> tuple | None:
  
     if D > 0:
         return (-b + math.sqrt(D)) / (2 * a), (-b - math.sqrt(D)) / (2 * a)
-    elif D == 0:
+    elif math.isclose(D, 0):
         x = -b / (2 * a)
         return x, x
     else:
@@ -19,8 +19,10 @@ def split_v1(x: list) -> tuple[list, list]:
     odd_list = []
     even_list = []
     for elem in x:
-        if elem % 2 == 0:   even_list.append(elem)
-        else:   odd_list.append(elem)
+        if elem % 2 == 0:
+            even_list.append(elem)
+        else:
+            odd_list.append(elem)
     return even_list, odd_list
 
 def split_v2(x: list) -> tuple[list, list]:
@@ -44,11 +46,20 @@ def time_test(size: int, count_experiments: int = 10) -> None:
     assert result_v1 == result_v2
     return (end_v1 - start_v1), (end_v2 - start_v2)
 
+def custom_assert(answer: tuple | None, target: tuple | None) -> bool:
+    if answer is None and target is None:
+        return True
+    elif answer is None and target is not None or answer is not None and target is None:
+        return False
+    else:
+        return math.isclose(answer[0], target[0]) and math.isclose(answer[1], target[1]) or\
+             math.isclose(answer[0], target[1]) and math.isclose(answer[1], target[0])
+
 if __name__ == "__main__":
     # task1
-    assert square_solution(-1, 7, 8) in [(-1, 8), (8, -1)]
-    assert square_solution(4, 4, 1) in [(-0.5, -0.5), (-0.5,)]
-    assert square_solution(2, 1, 1) is None
+    assert custom_assert(square_solution(-1, 7, 8), (-1, 8))
+    assert custom_assert(square_solution(4, 4, 1), (-0.5, -0.5))
+    assert custom_assert(square_solution(2, 1, 1), None)
 
     # task2 
     assert split_v1([1, 2, 3, 4, 5]) == ([2, 4], [1, 3, 5])
