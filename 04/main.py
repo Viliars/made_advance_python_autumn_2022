@@ -1,7 +1,4 @@
 class CustomList(list):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     # функция для переиспользования кода
     def __processing(self, other, function):
         len_self = len(self)
