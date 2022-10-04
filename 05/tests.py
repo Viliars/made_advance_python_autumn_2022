@@ -241,7 +241,7 @@ class TestTicTacGame(unittest.TestCase):
 
     def test_integration_win(self):
         stdin_fileno = sys.stdin
-        sys.stdin = open("input_winX.txt", "r")
+        sys.stdin = open("files/input_winX.txt", "r")
         stdout_fileno = sys.stdout
         sys.stdout = open("output.txt", "w")
 
@@ -255,13 +255,13 @@ class TestTicTacGame(unittest.TestCase):
         sys.stdout.close()
         sys.stdout = stdout_fileno
 
-        with open("right_output_winX.txt", "r") as rigth_output:
+        with open("files/right_output_winX.txt", "r") as rigth_output:
             with open("output.txt", "r") as output:
                 self.assertEqual(rigth_output.read(), output.read())
 
     def test_integration_draw(self):
         stdin_fileno = sys.stdin
-        sys.stdin = open("input_draw.txt", "r")
+        sys.stdin = open("files/input_draw.txt", "r")
         stdout_fileno = sys.stdout
         sys.stdout = open("output.txt", "w")
 
@@ -275,7 +275,7 @@ class TestTicTacGame(unittest.TestCase):
         sys.stdout.close()
         sys.stdout = stdout_fileno
 
-        with open("right_output_draw.txt", "r") as rigth_output:
+        with open("files/right_output_draw.txt", "r") as rigth_output:
             with open("output.txt", "r") as output:
                 self.assertEqual(rigth_output.read(), output.read())
 
