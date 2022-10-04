@@ -1,10 +1,11 @@
 import unittest
-from main import TicTacGame
 import sys
 from random import randint
 import random
 import string
 import os
+from main import TicTacGame
+
 
 class TestTicTacGame(unittest.TestCase):
     def test_change_step(self):
@@ -15,7 +16,7 @@ class TestTicTacGame(unittest.TestCase):
         game.change_step()
 
         self.assertEqual(game.step, "O")
-    
+
     def test_update_board_1(self):
         game = TicTacGame()
         game.update_board("1 1")
@@ -43,7 +44,8 @@ class TestTicTacGame(unittest.TestCase):
             game = TicTacGame()
             row = randint(-10, 10)
             col = randint(-10, 10)
-            move = " "*randint(0, 100) + str(row) + " "*randint(0, 100) + str(col) + " "*randint(0, 100)
+            move = " "*randint(0, 100) + str(row) + \
+                " "*randint(0, 100) + str(col) + " "*randint(0, 100)
 
             if row not in [0, 1, 2] or col not in [0, 1, 2]:
                 self.assertFalse(game.validate_input(move))
@@ -56,7 +58,8 @@ class TestTicTacGame(unittest.TestCase):
             game = TicTacGame()
             row = randint(0, 2)
             col = randint(0, 2)
-            move = " "*randint(0, 100) +str(row) + " "*randint(0, 100) + str(col)+ " "*randint(0, 100)
+            move = " "*randint(0, 100) + str(row) + \
+                " "*randint(0, 100) + str(col) + " "*randint(0, 100)
 
             self.assertTrue(game.validate_input(move))
 
@@ -67,7 +70,7 @@ class TestTicTacGame(unittest.TestCase):
     def test_validate_input_3(self):
         game = TicTacGame()
         letters = string.ascii_letters + ' '
-        
+
         for _ in range(100):
             size = randint(0, 100)
             move = ''.join(random.choice(letters) for i in range(size))
@@ -80,7 +83,8 @@ class TestTicTacGame(unittest.TestCase):
             game = TicTacGame()
             row = randint(0, 2)
             col = randint(0, 2)
-            move = " "*randint(0, 100) +str(row) + " "*randint(0, 100) + str(col)+ " "*randint(0, 100)
+            move = " "*randint(0, 100) + str(row) + \
+                " "*randint(0, 100) + str(col) + " "*randint(0, 100)
 
             self.assertTrue(game.validate_input(move))
 
@@ -100,7 +104,8 @@ class TestTicTacGame(unittest.TestCase):
 
             row = randint(0, 2)
             col = randint(0, 2)
-            move = " "*randint(0, 100) +str(row) + " "*randint(0, 100) + str(col)+ " "*randint(0, 100)
+            move = " "*randint(0, 100) + str(row) + \
+                " "*randint(0, 100) + str(col) + " "*randint(0, 100)
             game.update_board(move)
 
             right_board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
@@ -114,7 +119,7 @@ class TestTicTacGame(unittest.TestCase):
     # простые тесты на победу
     def test_check_winner_1(self):
         game = TicTacGame()
-        
+
         self.assertFalse(game.check_winner())
 
         self.assertEqual(game.step, "X")
@@ -136,7 +141,7 @@ class TestTicTacGame(unittest.TestCase):
 
         game = TicTacGame()
         game.change_step()
-        
+
         self.assertFalse(game.check_winner())
 
         self.assertEqual(game.step, "O")

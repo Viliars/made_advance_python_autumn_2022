@@ -1,13 +1,15 @@
 import os
 import re
 
-class TicTacGame:
-    BOARD_SIZE = 3
+BOARD_SIZE = 3
 
+
+class TicTacGame:
     def __init__(self):
-        self.board = [[" "] * TicTacGame.BOARD_SIZE for _ in range(TicTacGame.BOARD_SIZE)]
+        self.board = [[" "] * BOARD_SIZE for _ in range(BOARD_SIZE)]
         self.step = "X"
-        self.validate_pattern = re.compile("^\s*(\d)\s*(\d)\s*$")
+        self.validate_pattern = re.compile(r"^\s*(\d)\s*(\d)\s*$")
+        self.next_step = False
 
     def show_board(self):
         print("---------------")
@@ -22,14 +24,13 @@ class TicTacGame:
 
     def validate_input(self, move):
         self.next_step = False
-        
         if not self.validate_pattern.match(move):
             print("Некорректный ввод")
             return False
 
         row, col = map(int, self.validate_pattern.findall(move)[0])
 
-        if row < 0 or row >= TicTacGame.BOARD_SIZE or col < 0 or col >= TicTacGame.BOARD_SIZE:
+        if row < 0 or row >= BOARD_SIZE or col < 0 or col >= BOARD_SIZE:
             print("Некорректный ввод")
             print("Строка и столбец выбираются из промежутка от 0 до 2")
             print("Пример: 1 1")
@@ -55,25 +56,27 @@ class TicTacGame:
         else:
             self.step = "X"
 
-    def check_winner(self):        
+    def check_winner(self):
         # горизонтальные прямые
         for line in self.board:
-            if line.count(self.step) == TicTacGame.BOARD_SIZE:
+            if line.count(self.step) == BOARD_SIZE:
                 return self.step
 
         # вертикальные прямые
         for line in map(list, zip(*self.board)):
-            if line.count(self.step) == TicTacGame.BOARD_SIZE:
+            if line.count(self.step) == BOARD_SIZE:
                 return self.step
 
         # диагональная прямая
-        count_on_diag = [self.board[i][i] for i in range(TicTacGame.BOARD_SIZE)].count(self.step)
-        if count_on_diag == TicTacGame.BOARD_SIZE:
+        diag_line = [self.board[i][i] for i in range(BOARD_SIZE)]
+        count_on_diag = diag_line.count(self.step)
+        if count_on_diag == BOARD_SIZE:
             return self.step
 
         # диагональная прямая
-        count_on_diag = [self.board[i][TicTacGame.BOARD_SIZE - 1 - i] for i in range(TicTacGame.BOARD_SIZE)].count(self.step)
-        if count_on_diag == TicTacGame.BOARD_SIZE:
+        diag_line = [self.board[i][BOARD_SIZE-i-1] for i in range(BOARD_SIZE)]
+        count_on_diag = diag_line.count(self.step)
+        if count_on_diag == BOARD_SIZE:
             return self.step
 
         return False
@@ -107,6 +110,7 @@ class TicTacGame:
 
                 if self.next_step:
                     self.change_step()
+
 
 if __name__ == "__main__":
     game = TicTacGame()
