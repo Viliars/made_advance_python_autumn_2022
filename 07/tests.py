@@ -1,8 +1,9 @@
 import unittest
-from main import TxtReader, TxtWriter,\
-        JsonReader, JsonWriter, CsvReader, CsvWriter,\
-        filtered_file, dump_data, read_data
 from io import StringIO
+from src.wrappers.txt import TxtReader, TxtWriter
+from src.wrappers.json import JsonReader, JsonWriter
+from src.wrappers.csv import CsvReader, CsvWriter
+from src.functions import filtered_file, dump_data, read_data
 
 
 class TestTxt(unittest.TestCase):
