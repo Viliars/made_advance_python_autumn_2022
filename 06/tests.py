@@ -22,7 +22,7 @@ class TestLRUCache(unittest.TestCase):
 
         self.assertIsNone(value)
 
-    def test_limit(self):
+    def test_limit_1(self):
         cache = LRUCache(2)
 
         cache.set("k1", "val1")
@@ -32,6 +32,22 @@ class TestLRUCache(unittest.TestCase):
         self.assertEqual(cache.get("k3"), "val3")
         self.assertEqual(cache.get("k2"), "val2")
         self.assertIsNone(cache.get("k1"))
+
+    def test_from_hw(self):
+        cache = LRUCache(2)
+
+        cache.set("k1", "val1")
+        cache.set("k2", "val2")
+
+        self.assertIsNone(cache.get("k3"))  # None
+        self.assertEqual(cache.get("k2"), "val2")  # "val2"
+        self.assertEqual(cache.get("k1"), "val1")  # "val1"
+
+        cache.set("k3", "val3")
+
+        self.assertEqual(cache.get("k3"), "val3")  # "val3"
+        self.assertIsNone(cache.get("k2"))  # None
+        self.assertEqual(cache.get("k1"), "val1")  # "val1"
 
     def test_double_set(self):
         cache = LRUCache(2)
