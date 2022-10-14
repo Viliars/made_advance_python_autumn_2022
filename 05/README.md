@@ -14,10 +14,12 @@ python3 -m coverage report
 ```bash
 pylint main.py --disable=missing-docstring
 pylint tests.py --disable=missing-docstring
+pylint exceptions.py --disable=missing-docstring
 ```
 
 #### Проверка flake8
 ```bash
 flake8 main.py
 flake8 tests.py
+flake8 exceptions.py
 ```

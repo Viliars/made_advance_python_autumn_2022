@@ -5,7 +5,8 @@ import random
 import string
 import os
 from main import TicTacGame
-from exceptions import TicTacError, IncorrectInput, IncorrectValue, CellOccupied
+from exceptions import TicTacError, IncorrectInput, \
+    IncorrectValue, CellOccupied
 
 
 class TestTicTacGame(unittest.TestCase):
