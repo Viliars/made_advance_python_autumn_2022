@@ -1,5 +1,5 @@
 import unittest
-from main import LRUCache
+from lru_cache import LRUCache
 
 
 class TestLRUCache(unittest.TestCase):
@@ -11,6 +11,41 @@ class TestLRUCache(unittest.TestCase):
         value = cache.get("k1")
 
         self.assertEqual(value, "val1")
+
+    def test_size_one(self):
+        cache = LRUCache(1)
+
+        cache.set("k1", "val1")
+
+        value = cache.get("k1")
+
+        self.assertEqual(value, "val1")
+        self.assertIsNone(cache.get("k2"))
+
+        cache.set("k2", "val2")
+        self.assertIsNone(cache.get("k1"))
+        self.assertEqual(cache.get("k2"), "val2")
+
+    def test_change_exist_key(self):
+        cache = LRUCache(2)
+
+        cache.set("k1", "val1")
+        cache.set("k2", "val2")
+        cache.set("k3", "val3")
+        # exist key
+        cache.set("k3", "val1_new")
+
+        self.assertEqual(cache.get("k3"), "val1_new")
+        self.assertEqual(cache.get("k2"), "val2")
+        self.assertIsNone(cache.get("k1"))
+
+        cache.set("k3", "val1_new2")
+        cache.set("k4", "val4")
+
+        self.assertEqual(cache.get("k3"), "val1_new2")
+        self.assertEqual(cache.get("k4"), "val4")
+        self.assertIsNone(cache.get("k1"))
+        self.assertIsNone(cache.get("k2"))
 
     def test_get_none(self):
         cache = LRUCache(2)
