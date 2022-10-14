@@ -1,3 +1,4 @@
+from exceptions import IncorrectInput, IncorrectValue, CellOccupied
 import os
 import re
 
@@ -21,29 +22,38 @@ class TicTacGame:
         print(f"Сейчас ход игрока {self.step}")
         move = input("Введите строку и столбец 0..2 0..2 = ")
         return move
+    
 
-    def validate_input(self, move):
-        self.next_step = False
+    def _validate(self, move):
         if not self.validate_pattern.match(move):
-            print("Некорректный ввод")
-            return False
+            raise IncorrectInput()
 
         row, col = map(int, self.validate_pattern.findall(move)[0])
 
         if row < 0 or row >= BOARD_SIZE or col < 0 or col >= BOARD_SIZE:
+            raise IncorrectValue()
+
+        if self.board[row][col] != " ":
+            raise CellOccupied()
+
+        return True
+
+    def validate_input(self, move):
+        self.next_step = False
+        
+        try:
+            if self._validate(move):
+                self.next_step = True
+                return True
+        except IncorrectInput:
+            print("Некорректный ввод")
+        except IncorrectValue:
             print("Некорректный ввод")
             print("Строка и столбец выбираются из промежутка от 0 до 2")
             print("Пример: 1 1")
-            return False
-
-        if self.board[row][col] != " ":
+        except CellOccupied:
             print("Выбранная клетка занята")
             print("Пожалуйста, выберите другую клетку")
-            return False
-
-        self.next_step = True
-
-        return True
 
     def update_board(self, move):
         row, col = map(int, self.validate_pattern.findall(move)[0])
