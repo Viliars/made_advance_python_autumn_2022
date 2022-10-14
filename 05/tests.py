@@ -48,8 +48,7 @@ class TestTicTacGame(unittest.TestCase):
             move = " "*randint(0, 100) + str(row) + \
                 " "*randint(0, 100) + str(col) + " "*randint(0, 100)
 
-            with self.assertRaises(IncorrectValue):
-                game._validate(move)
+            self.assertRaises(IncorrectValue, game._validate, move)
 
     # сложные тесты с возможными пробелами
     def test_validate_input_1(self):
@@ -61,8 +60,7 @@ class TestTicTacGame(unittest.TestCase):
                 " "*randint(0, 100) + str(col) + " "*randint(0, 100)
 
             if row not in [0, 1, 2] or col not in [0, 1, 2]:
-                with self.assertRaises(TicTacError):
-                    game._validate(move)
+                self.assertRaises(TicTacError, game._validate, move)
                 self.assertFalse(game.validate_input(move))
             else:
                 self.assertTrue(game.validate_input(move))
@@ -80,8 +78,7 @@ class TestTicTacGame(unittest.TestCase):
 
             game.update_board(move)
 
-            with self.assertRaises(CellOccupied):
-                game._validate(move)
+            self.assertRaises(CellOccupied, game._validate, move)
             self.assertFalse(game.validate_input(move))
 
     def test_validate_input_3(self):
@@ -92,8 +89,7 @@ class TestTicTacGame(unittest.TestCase):
             size = randint(0, 100)
             move = ''.join(random.choice(letters) for i in range(size))
 
-            with self.assertRaises(IncorrectInput):
-                game._validate(move)
+            self.assertRaises(IncorrectInput, game._validate, move)
             self.assertFalse(game.validate_input(move))
 
     # сложные тесты с возможными пробелами
