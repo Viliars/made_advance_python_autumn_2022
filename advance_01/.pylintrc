@@ -1,0 +1,10 @@
+[MAIN]
+
+disable=
+    missing-docstring,
+    logging-fstring-interpolation
+
+[LOGGING]
+
+logging-modules=logging
+logging-format-style=new
