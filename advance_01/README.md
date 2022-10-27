@@ -1,23 +1,13 @@
-# HW6 - LRUCache
-
-#### Запуск тестов
-```bash
-python3 -m coverage run -m unittest tests.py
-```
-
-#### Просмотр покрытия
-```bash
-python3 -m coverage report
-```
+# Advance HW1 - Logging
 
 #### Проверка pylint
 ```bash
-pylint lru_cache.py --disable=missing-docstring
-pylint tests.py --disable=missing-docstring
+pylint lru_cache.py
+pylint config.py
 ```
 
 #### Проверка flake8
 ```bash
 flake8 lru_cache.py
-flake8 tests.py
+flake8 config.py
 ```
