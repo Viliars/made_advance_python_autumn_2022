@@ -1,0 +1,13 @@
+[MAIN]
+
+disable=
+    missing-docstring,
+    logging-fstring-interpolation,
+    global-statement,
+    broad-except,
+    invalid-name,
+
+[LOGGING]
+
+logging-modules=loguru
+logging-format-style=new
