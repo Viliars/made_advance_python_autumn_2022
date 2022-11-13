@@ -2,17 +2,22 @@
 
 #### Запуск сервера
 ```bash
-python server.py -w 10 -k 7
+python3 server.py -w 10 -k 7
 ```
 
 #### Запуск клиента
 ```bash
-python client.py 10 urls.txt
+python3 client.py 10 urls.txt
 ```
 
 #### Генерация "хороших" урлов
 ```bash
-python generate_urls.py
+python3 generate_urls.py
+```
+
+#### Запуск тестов
+```bash
+python3 -m unittest tests/tests.py
 ```
 
 #### Проверка pylint

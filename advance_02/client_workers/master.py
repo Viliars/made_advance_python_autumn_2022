@@ -8,10 +8,10 @@ def chunks(lst: list, n: int) -> list[list]:
 
     result = []
     for i in range(0, n):
-        result.append(lst[i * chunk_size: (i + 1) * chunk_size])
+        result.append(lst[i * chunk_size : (i + 1) * chunk_size])
 
     for i in range(remainder):
-        result[i].append(lst[n * chunk_size + i: n * chunk_size + i + 1])
+        result[i].append(lst[n * chunk_size + i : n * chunk_size + i + 1])
 
     return result
 

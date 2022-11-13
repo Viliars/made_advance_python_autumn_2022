@@ -6,6 +6,7 @@ disable=
     global-statement,
     broad-except,
     invalid-name,
+    consider-using-with
 
 [LOGGING]
 

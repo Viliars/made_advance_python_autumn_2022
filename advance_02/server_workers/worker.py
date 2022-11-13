@@ -58,5 +58,7 @@ class ServerWorker(Thread):
             return json.dumps({"error": str(exc)})
 
     def get_top_k(self, text: str) -> str:
-        top_k = Counter(text.split()).most_common(self.k)
-        return json.dumps(top_k)
+        result_dict = {}
+        for word, count in Counter(text.split()).most_common(self.k):
+            result_dict[word] = count
+        return json.dumps(result_dict)
