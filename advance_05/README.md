@@ -3,15 +3,19 @@
 ### 1. Сравнение использования weakref и слотов
 
 create
+
 ![](screenshots/create.png)
 
 access
+
 ![](screenshots/access.png)
 
 change
+
 ![](screenshots/change.png)
 
 delete
+
 ![](screenshots/delete.png)
 
 Можно сделать вывод, что slots ускоряет выполнение операций. А использование weakref замедляет работу.
@@ -31,6 +35,8 @@ memory_profiler:
 ```bash
 python profile_decorator.py
 ```
+
+### 4. Линтеры
 
 #### Проверка pylint
 ```bash
