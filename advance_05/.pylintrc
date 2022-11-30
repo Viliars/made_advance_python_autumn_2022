@@ -1,0 +1,7 @@
+[MAIN]
+
+disable=
+    missing-docstring,
+    unused-variable,
+    too-few-public-methods,
+    invalid-name
