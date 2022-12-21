@@ -12,6 +12,9 @@ def predict_message_mood(
     bad_thresholds: float = 0.3,
     good_thresholds: float = 0.8,
 ) -> str:
+    if type(message) is not str:
+        raise TypeError("message must be string")
+
     prob = model.predict(message)
 
     if prob < bad_thresholds:

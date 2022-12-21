@@ -1,3 +1,4 @@
+from unittest.mock import Mock
 import pytest
 
 
@@ -31,6 +32,14 @@ def test_int_from_str(value, base, expected):
     assert int(value, base=base) == expected
 
 
+@pytest.mark.parametrize("value,expected", [(True, 1), (False, 0)])
+def test_int_from_bool(value, expected):
+    result = int(value)
+
+    assert type(result) is int
+    assert int(value) == expected
+
+
 @pytest.mark.parametrize(
     "value,expected", [(1.0, 1), (1.5, 1), (1.99, 1), (2.0, 2), (-3.5, -3), (0.0, 0)]
 )
@@ -39,3 +48,22 @@ def test_int_from_float(value, expected):
 
     assert type(result) is int
     assert int(value) == expected
+
+
+@pytest.mark.parametrize(
+    "value,expected",
+    [
+        ("hello", ValueError),
+        (b"hello", ValueError),
+        ("-3.5", ValueError),
+        (None, TypeError),
+        ([1, 2, 3], TypeError),
+        ((1, 2, 3), TypeError),
+        (Mock(), TypeError),
+        ({}, TypeError),
+        (set(), TypeError),
+    ],
+)
+def test_int_error(value, expected):
+    with pytest.raises(expected):
+        int(value)
