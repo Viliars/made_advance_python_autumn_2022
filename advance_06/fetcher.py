@@ -5,7 +5,7 @@ import aiohttp
 import aiofiles
 
 
-async def save_page(data, path):
+async def save_page(data, path: Path):
     async with aiofiles.open(path, mode="w") as fout:
         await fout.write(data)
 
@@ -22,6 +22,8 @@ async def worker(queue: asyncio.Queue, session: aiohttp.ClientSession):
         try:
             page = await download_page(url, session)
             await save_page(page, save_path)
+        except Exception:
+            pass
         finally:
             queue.task_done()
 

@@ -2,4 +2,6 @@
 
 disable=
     missing-docstring,
-    unspecified-encoding
+    unspecified-encoding,
+    consider-using-with,
+    broad-except
