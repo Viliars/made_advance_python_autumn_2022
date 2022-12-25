@@ -17,7 +17,11 @@ python3 generate_urls.py
 
 #### Запуск тестов
 ```bash
-python3 -m unittest tests/tests.py
+python3 -m unittest tests/local_tests.py
+```
+
+```bash
+pytest
 ```
 
 #### Проверка pylint

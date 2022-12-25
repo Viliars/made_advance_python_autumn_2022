@@ -6,9 +6,5 @@ disable=
     global-statement,
     broad-except,
     invalid-name,
-    consider-using-with
-
-[LOGGING]
-
-logging-modules=loguru
-logging-format-style=new
+    consider-using-with,
+    line-too-long
