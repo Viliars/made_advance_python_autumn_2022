@@ -1,0 +1,9 @@
+[MAIN]
+
+disable=
+    missing-docstring,
+    attribute-defined-outside-init,
+    redefined-outer-name,
+    invalid-name,
+    use-implicit-booleaness-not-comparison,
+    unidiomatic-typecheck
