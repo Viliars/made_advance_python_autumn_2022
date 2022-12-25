@@ -17,7 +17,7 @@ python3 generate_urls.py
 
 #### Запуск тестов
 ```bash
-python3 -m unittest tests/local_tests.py
+python3 -m unittest tests/blackbox_tests.py
 ```
 
 ```bash
