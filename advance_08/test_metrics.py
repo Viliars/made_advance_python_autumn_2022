@@ -1,4 +1,4 @@
-from time import sleep
+from time import time, sleep
 from random import randint
 from metrics import Stats, MetricTimer, MetricAvg, MetricCount, BaseMetric
 
@@ -141,3 +141,50 @@ def test_stats_no_used():
     Stats.timer("test")
 
     assert Stats.collect() == {}
+
+
+def test_all():
+    def calc() -> float:
+        calc_count = getattr(calc, "call_count", 0)
+
+        calc_count += 1
+        match calc_count:
+            case 1:
+                sleep(0.1)
+                setattr(calc, "call_count", calc_count)
+                return 3
+            case 2:
+                sleep(0.3)
+                setattr(calc, "call_count", calc_count)
+                return 7
+        return 0
+
+    with Stats.timer("calc"):  # 0.1
+        res = calc()  # 3
+
+    Stats.count("calc").add()
+    Stats.avg("calc").add(res)
+
+    t1 = time()
+    res = calc()  # 7
+    t2 = time()
+    Stats.timer("calc").add(t2 - t1)  # 0.3
+    Stats.count("calc").add()
+    Stats.avg("calc").add(res)
+
+    Stats.count("http_get_data").add()
+    Stats.avg("http_get_data").add(0.7)
+
+    Stats.count("no_used")  # не попадет в результат collect
+
+    metrics = Stats.collect()
+    assert metrics == {
+        "calc.count": 2,
+        "calc.avg": 5.0,
+        "calc.timer": 0.4,
+        "http_get_data.count": 1,
+        "http_get_data.avg": 0.7,
+    }
+
+    metrics = Stats.collect()
+    assert metrics == {}

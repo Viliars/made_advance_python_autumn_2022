@@ -1,5 +1,5 @@
 from __future__ import annotations
-from time import time, sleep
+from time import time
 from typing import Any
 
 Number = int | float
@@ -57,23 +57,31 @@ class MetricTimer(BaseMetric):
 class MetricAvg(BaseMetric):
     def __init__(self, name: str):
         super().__init__(name=name)
-        self.value: list[Number] = []
+        self.value: Number | None = None
+        self.size: int = 0
 
     def get_name(self) -> str:
         return f"{self.name}.avg"
 
     def get_value(self) -> Number | None:
         if self.value:
-            return sum(self.value) / len(self.value)
+            return self.value / self.size
 
         return None
 
     def add(self, value: Number) -> MetricAvg:
-        self.value.append(value)
+        if self.value:
+            self.value += value
+        else:
+            self.value = value
+
+        self.size += 1
+
         return self
 
     def clear(self) -> MetricAvg:
-        self.value = []
+        self.value = None
+        self.size = 0
 
         return self
 
@@ -137,51 +145,3 @@ class Stats:
         Stats.__metrics = {}
 
         return metrics
-
-
-if __name__ == "__main__":
-
-    def calc() -> float:
-        calc_count = getattr(calc, "call_count", 0)
-
-        calc_count += 1
-        match calc_count:
-            case 1:
-                sleep(0.1)
-                setattr(calc_count, "call_count", calc_count)
-                return 3
-            case 2:
-                sleep(0.3)
-                setattr(calc_count, "call_count", calc_count)
-                return 7
-        return 0
-
-    with Stats.timer("calc"):  # 0.1
-        res = calc()  # 3
-
-    Stats.count("calc").add()
-    Stats.avg("calc").add(res)
-
-    t1 = time()
-    res = calc()  # 7
-    t2 = time()
-    Stats.timer("calc").add(t2 - t1)  # 0.3
-    Stats.count("calc").add()
-    Stats.avg("calc").add(res)
-
-    Stats.count("http_get_data").add()
-    Stats.avg("http_get_data").add(0.7)
-
-    Stats.count("no_used")  # не попадет в результат collect
-
-    metrics = Stats.collect()
-    assert metrics == {
-        "calc.count": 2,
-        "calc.avg": 5.0,
-        "calc.timer": 0.4,
-        "http_get_data.count": 1,
-        "http_get_data.avg": 0.7,
-    }
-
-    metrics = Stats.collect()
-    assert metrics == {}
