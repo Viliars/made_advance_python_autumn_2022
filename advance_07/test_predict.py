@@ -30,18 +30,17 @@ def test_predict_message_mood(prob, bad_thresholds, good_thresholds, expected):
     model = Mock()
     model.predict.return_value = prob
 
-    for _ in range(COUNT_TESTS):
+    for i in range(COUNT_TESTS):
         message = random_message()
         assert (
             predict_message_mood(message, model, bad_thresholds, good_thresholds)
             == expected
         )
-
-    assert model.predict.call_count == COUNT_TESTS
-
-    for i in range(COUNT_TESTS):
         assert len(model.predict.call_args_list[i].args) == 1
         assert type(model.predict.call_args_list[i].args[0]) is str
+        assert model.predict.call_args_list[i].args[0] == message
+
+    assert model.predict.call_count == COUNT_TESTS
 
 
 @pytest.mark.parametrize(
